@@ -10,16 +10,16 @@ Link state is either up, down or unknown
 
 Interface | Link state | IP address/subnet | Static/dynamic |
 ----------|------------|-------------------|----------------|
-lo        | down (unknown?)       | 127.1.2.3/24      | static         |
-eth0      |up            |10.0.2.15/24                   |static                |
-eth1      |up            |192.168.56.20/24                   |static                |
-eth2      |down            |NOT SET                   | NOT SET                |
+lo        | down (unknown?)  | 127.1.2.3/24   | static  |
+eth0      |up            |10.0.2.15/24      |   static  |
+eth1      |up            |192.168.56.20/24  |   static  |
+eth2      |down          |NOT SET          | NOT SET    |
 
 Route to           | via             | Interface |
 -------------------|-----------------|-----------|
-123.123.0.0/16     | 123.123.1.1     | wlp0s20f3 |
-                   |                 |           |
-                   |                 |           |
+default            | 10.0.2.2        | eth0      |
+10.0.2.0/24        | None (MAC)      | eth0      |
+192.168.56.0/24    | None (MAC)      | eth1      |
 
 ### COMMAND LOG
 ```text
@@ -57,6 +57,12 @@ tsam@gateway:~$ ip addr
        valid_lft forever preferred_lft forever
 4: eth2: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
     link/ether 08:00:27:4b:26:fb brd ff:ff:ff:ff:ff:ff
+
+
+tsam@gateway:~$ ip route
+default via 10.0.2.2 dev eth0 metric 202 
+10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 
+192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.20 
 
 $ [WRITE COMMAND USED HERE]
 [WRITE COMPLETE COMMAND OUTPUT HERE]
