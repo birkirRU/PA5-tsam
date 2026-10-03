@@ -10,7 +10,7 @@ Link state is either up, down or unknown
 
 Interface | Link state | IP address/subnet | Static/dynamic |
 ----------|------------|-------------------|----------------|
-lo        | down (unknown?)  | 127.1.2.3/24   | static  |
+lo        | down (unknown?)  | 127.0.0.1/8  | static  |
 eth0      |up            |10.0.2.15/24      |   static  |
 eth1      |up            |192.168.56.20/24  |   static  |
 eth2      |down          |NOT SET          | NOT SET    |
