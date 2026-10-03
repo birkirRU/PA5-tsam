@@ -78,20 +78,44 @@ Link state is either up, down or unknown
 
 Interface | Link state | IP address/subnet | Static/dynamic |
 ----------|------------|-------------------|----------------|
-lo        | down       | 127.1.2.3/24      | static         |
-eth0      |            |                   |                |
-eth1      |            |                   |                |
+lo        | down (unknown) | 127.0.0.1/8       | static         |
+eth0      | down           | NOT SET           | NOT SET        |
+eth1      | up             | 192.168.56.21     | static         |
 
 Route to           | via             | Interface |
 -------------------|-----------------|-----------|
-123.123.0.0/16     | 123.123.1.1     | wlp0s20f3 |
-                   |                 |           |
-                   |                 |           |
+192.168.56.0/24    | none (MAC)      | eth1      |
 
 ### COMMAND LOG
 ```text
-$ [WRITE COMMAND USED HERE]
-[WRITE COMPLETE COMMAND OUTPUT HERE]
+tsam@client:~$ ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:fe:47:f0 brd ff:ff:ff:ff:ff:ff
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:ac:04:b3 brd ff:ff:ff:ff:ff:ff
+
+
+tsam@client:~$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host proto kernel_lo 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 08:00:27:fe:47:f0 brd ff:ff:ff:ff:ff:ff
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:ac:04:b3 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.21/24 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:feac:4b3/64 scope link proto kernel_ll 
+       valid_lft forever preferred_lft forever
+
+
+tsam@client:~$ ip route
+192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.21 
 
 $ [WRITE COMMAND USED HERE]
 [WRITE COMPLETE COMMAND OUTPUT HERE]
