@@ -123,4 +123,4 @@ $ [WRITE COMMAND USED HERE]
 
 ## Question 1c - Why does ping and nslookup not work on the client?
 
-[WRITE YOUR ANSWER HERE]
+The reason why the client cannot ping nor perform a network DNS lookups, is because it doesn't have a default gateway out to the internet, it is yet to be configured. This can be seen in the output of the `ip route` of `1b`, no "default" keyword is displayed in the first line of outpu. The default gateway IP is the router's IP within the LAN (which client is connected to). It forwards your request to the internet.
