@@ -123,4 +123,35 @@ $ [WRITE COMMAND USED HERE]
 
 ## Question 1c - Why does ping and nslookup not work on the client?
 
-The reason why the client cannot ping nor perform a network DNS lookups, is because it doesn't have a default gateway out to the internet, it is yet to be configured. This can be seen in the output of the `ip route` of `1b`, no "default" keyword is displayed in the first line of outpu. The default gateway IP is the router's IP within the LAN (which client is connected to). It forwards your request to the internet.
+The reason why the client cannot ping nor perform a network DNS lookups, is because it doesn't have a default gateway out to the internet, it is yet to be configured. This can be seen in the output of the `ip route` of `1b`, no "default" keyword is displayed in the first line of outpu. The default gateway IP is the router's IP within the LAN (which client is connected to). It forwards your request to the internet. 
+
+To the contrary, the gateway VM, has default gateway, hence allows routing 
+
+#### Client
+
+```client
+tsam@client:~$ ping 8.8.8.8
+ping: connect: Network unreachable
+tsam@client:~$ nslooup google.com
+-bash: nslooup: command not found
+```
+
+---
+#### Gateway
+
+```
+tsam@gateway:~$ nslookup google.com
+Server:         1.1.1.1
+Address:        1.1.1.1:53
+...
+...
+
+tsam@gateway:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=64 time=29.8 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=64 time=55.0 ms
+c^C
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 29.788/42.400/55.012/12.612 ms
+```
