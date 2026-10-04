@@ -13,12 +13,12 @@ TODO: FLIP 1 and 2. i accidently flipped it, 2 is supposed to be ahead of 1.
 
 The answers below are based of if the TODO above is being followed.
 
-| Packet | Source interface | Destination interface |
-| ------ | ---------------- | --------------------- |
-| 1      | eth0 on client   | eth2 on gateway       |
-| 2      | eth0 on gateway  | ??                    |
-| 3      | ??               | eth0 on gateway       |
-| 4      | eth2 on gateway  | eth0 on client        |
+| Packet | Source interface      | Destination interface |
+| ------ | --------------------- | --------------------- |
+| 1      | eth0 on client        | eth2 on gateway       |
+| 2      | eth0 on gateway       | VirtualBox NAT router |
+| 3      | VirtualBox NAT router | eth0 on gateway       |
+| 4      | eth2 on gateway       | eth0 on client        |
 
 ## Question 4c
 ### Why do both the source and destination Ethernet addresses change between packet 1 and 2, despite the destination IP address being the same?
