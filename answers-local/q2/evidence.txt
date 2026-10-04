@@ -1,0 +1,121 @@
+A5-EVIDENCE-FILE-VERSION: 3
+QUESTION: Q2
+COLLECTOR: a5-collect-evidence.sh
+COLLECTOR_HOST: gateway
+CLIENT_ADDRESS_USED: 10.123.123.2
+COLLECTION_START_UTC: 2026-10-04T11:50:44Z
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q2
+HOST: gateway
+ROLE: gateway
+LABEL: links
+COMMAND: ip -br link
+START_TIME_UTC: 2026-10-04T11:50:44Z
+OUTPUT:
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eth0             UP             08:00:27:e4:47:dd <BROADCAST,MULTICAST,UP,LOWER_UP> 
+eth1             UP             08:00:27:41:f2:84 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+eth2             UP             08:00:27:4b:26:fb <BROADCAST,MULTICAST,UP,LOWER_UP> 
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T11:50:44Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q2
+HOST: gateway
+ROLE: gateway
+LABEL: addresses_ipv4
+COMMAND: ip -br -4 addr
+START_TIME_UTC: 2026-10-04T11:50:44Z
+OUTPUT:
+lo               UNKNOWN        127.0.0.1/8 
+eth0             UP             10.0.2.15/24 
+eth1             UP             192.168.56.20/24 
+eth2             UP             10.123.123.1/24 
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T11:50:44Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q2
+HOST: client
+ROLE: client
+LABEL: links
+COMMAND: ip -br link
+START_TIME_UTC: 2026-10-04T11:50:44Z
+OUTPUT:
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eth0             UP             08:00:27:fe:47:f0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+eth1             UP             08:00:27:ac:04:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T11:50:44Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q2
+HOST: client
+ROLE: client
+LABEL: addresses_ipv4
+COMMAND: ip -br -4 addr
+START_TIME_UTC: 2026-10-04T11:50:44Z
+OUTPUT:
+lo               UNKNOWN        127.0.0.1/8 
+eth0             UP             10.123.123.2/24 
+eth1             UP             192.168.56.21/24 
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T11:50:44Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q2
+HOST: gateway
+ROLE: gateway
+LABEL: ping_to_client
+COMMAND: ping -c 2 -W 2 10.123.123.2
+START_TIME_UTC: 2026-10-04T11:50:44Z
+OUTPUT:
+PING 10.123.123.2 (10.123.123.2) 56(84) bytes of data.
+64 bytes from 10.123.123.2: icmp_seq=1 ttl=64 time=0.222 ms
+64 bytes from 10.123.123.2: icmp_seq=2 ttl=64 time=0.480 ms
+
+--- 10.123.123.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1013ms
+rtt min/avg/max/mdev = 0.222/0.351/0.480/0.129 ms
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T11:50:45Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q2
+HOST: client
+ROLE: client
+LABEL: ping_to_gateway
+COMMAND: ping -c 2 -W 2 10.123.123.1
+START_TIME_UTC: 2026-10-04T11:50:46Z
+OUTPUT:
+PING 10.123.123.1 (10.123.123.1) 56(84) bytes of data.
+64 bytes from 10.123.123.1: icmp_seq=1 ttl=64 time=0.267 ms
+64 bytes from 10.123.123.1: icmp_seq=2 ttl=64 time=0.687 ms
+
+--- 10.123.123.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1008ms
+rtt min/avg/max/mdev = 0.267/0.477/0.687/0.210 ms
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T11:50:46Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q2
+HOST: client
+ROLE: client
+LABEL: internet_ping_attempt
+COMMAND: ping -c 2 -W 2 8.8.8.8
+START_TIME_UTC: 2026-10-04T11:50:46Z
+OUTPUT:
+ping: connect: Network unreachable
+EXIT_CODE: 2
+END_TIME_UTC: 2026-10-04T11:50:46Z
+=== A5-EVIDENCE-END ===
+
+COLLECTION_END_UTC: 2026-10-04T11:50:46Z
