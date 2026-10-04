@@ -1,12 +1,12 @@
 # Question 4 - Observe a packet through NAT
 
 ## Question 4a - Packet table
-| Packet | Source MAC        | Destination MAC   | Source IP    | Destination IP | TTL | ICMP type |
-| ------ | ----------------- | ----------------- | ------------ | -------------- | --- | --------- |
-| 1      | 08:00:27:e4:47:dd | 52:54:00:12:35:00 | 10.0.2.15    | 8.8.8.8        | 63  | 8         |
-| 2      | 08:00:27:fe:47:f0 | 08:00:27:4b:26:fb | 10.123.123.2 | 8.8.8.8        | 64  | 8         |
-| 3      | 52:54:00:12:35:00 | 08:00:27:e4:47:dd | 8.8.8.8      | 10.0.2.15      | 63  | 0         |
-| 4      | 08:00:27:4b:26:fb | 08:00:27:fe:47:f0 | 8.8.8.8      | 10.123.123.2   | 62  | 0         |
+| Packet | Source MAC       | Destination MAC  | Source IP     | Destination IP | TTL | ICMP type |
+|--------|------------------|------------------|---------------|----------------|-----|-----------|
+| 1      |                  |                  |               |                |     |           |
+| 2      |                  |                  |               |                |     |           |
+| 3      |                  |                  |               |                |     |           |
+| 4      |                  |                  |               |                |     |           |
 
 ## Question 4b - Source and Destination Interfaces
 | Packet | Source interface  | Destination interface |
