@@ -20,7 +20,7 @@
 
 ## Question 4c
 ### Why do both the source and destination Ethernet addresses change between packet 1 and 2, despite the destination IP address being the same?
-Ethernet addresses are only valid on a single link (hop). The gateway is a router, so it receives the frame on one link (internal network) and creates a new frame for the next link (the VirtualBox NAT network). The source MAC becomes the gateway's eth0 and the destination MAC becomes the next hop's (the VirtualBox NAT router), while the destination IP 8.8.8.8 stays the same end to end.
+The destination IP identifies the final recipient and is kept end to end, while the MAC addresses identify only the next hop on each link. The client resolves the MAC of its next hop (the gateway) from the routing table via ARP, and the gateway does the same for its own next hop.
 
 The main reason why MAC is different, while IP is not, is because MAC solves the case of what exact recepiant should get the frame in the data layer (identification of next interface per hop), while IP (in Network layer) abstracts this by holding onto the final recepiant for the duration of the trip.
 ## Question 4d
