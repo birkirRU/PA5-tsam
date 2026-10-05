@@ -1,0 +1,132 @@
+A5-EVIDENCE-FILE-VERSION: 3
+QUESTION: Q5
+COLLECTOR: a5-collect-evidence.sh
+COLLECTOR_HOST: gateway
+CLIENT_ADDRESS_USED: 10.123.123.79
+COLLECTION_START_UTC: 2026-10-04T18:14:31Z
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q5
+HOST: client
+ROLE: client
+LABEL: network_interfaces_file
+COMMAND: cat /etc/network/interfaces
+START_TIME_UTC: 2026-10-04T18:14:31Z
+OUTPUT:
+Warning: Permanently added '10.123.123.79' (ED25519) to the list of known hosts.
+auto lo
+iface lo inet loopback
+iface lo inet6 loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 192.168.56.21
+	netmask 255.255.255.0
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T18:14:31Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q5
+HOST: client
+ROLE: client
+LABEL: addresses_ipv4
+COMMAND: ip -4 addr show dev eth0
+START_TIME_UTC: 2026-10-04T18:14:32Z
+OUTPUT:
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    inet 10.123.123.79/24 brd 10.123.123.255 scope global eth0
+       valid_lft forever preferred_lft forever
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T18:14:32Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q5
+HOST: client
+ROLE: client
+LABEL: routes_ipv4
+COMMAND: ip -4 route
+START_TIME_UTC: 2026-10-04T18:14:32Z
+OUTPUT:
+default via 10.123.123.1 dev eth0 metric 202 
+10.123.123.0/24 dev eth0 proto kernel scope link src 10.123.123.79 
+192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.21 
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T18:14:32Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q5
+HOST: client
+ROLE: client
+LABEL: resolv_conf
+COMMAND: cat /etc/resolv.conf
+START_TIME_UTC: 2026-10-04T18:14:32Z
+OUTPUT:
+nameserver 8.8.8.8
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T18:14:32Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q5
+HOST: client
+ROLE: client
+LABEL: dns_attempt
+COMMAND: nslookup google.com
+START_TIME_UTC: 2026-10-04T18:14:32Z
+OUTPUT:
+Server:		8.8.8.8
+Address:	8.8.8.8:53
+
+Non-authoritative answer:
+Name:	google.com
+Address: 142.251.13.139
+Name:	google.com
+Address: 142.251.13.102
+Name:	google.com
+Address: 142.251.13.100
+Name:	google.com
+Address: 142.251.13.101
+Name:	google.com
+Address: 142.251.13.138
+Name:	google.com
+Address: 142.251.13.113
+
+Non-authoritative answer:
+Name:	google.com
+Address: 2a00:1450:4001:c15::65
+Name:	google.com
+Address: 2a00:1450:4001:c15::71
+Name:	google.com
+Address: 2a00:1450:4001:c15::66
+Name:	google.com
+Address: 2a00:1450:4001:c15::64
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T18:14:32Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q5
+HOST: client
+ROLE: client
+LABEL: internet_ping_attempt
+COMMAND: ping -c 2 -W 2 8.8.8.8
+START_TIME_UTC: 2026-10-04T18:14:34Z
+OUTPUT:
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=62 time=52.8 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=62 time=64.8 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 52.807/58.826/64.845/6.019 ms
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-04T18:14:34Z
+=== A5-EVIDENCE-END ===
+
+COLLECTION_END_UTC: 2026-10-04T18:14:34Z
