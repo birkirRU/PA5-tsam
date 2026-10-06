@@ -26,4 +26,4 @@ The main reason why MAC is different, while IP is not, is because MAC solves the
 ## Question 4d
 ### How does the gateway associate the reply with the original request?
 
-[WRITE YOUR ANSWER HERE]
+The gateway uses the ICMP identifier. This means that when the request goes through NAT, an entry is stored in the NAT table which contains the ICMP identifier. The gateway now has an entry linking the client's internal address and the ICMP identifier to its own external address. The reply then carries this same ICMP identifier as the request because it was copied back by the receiver. When the reply finally arrives, the gateway simply has to look up the ICMP identifier in the NAT table and then change the destination address to the address linked to the identifier.
