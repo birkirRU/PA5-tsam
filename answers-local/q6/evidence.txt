@@ -1,0 +1,202 @@
+A5-EVIDENCE-FILE-VERSION: 3
+QUESTION: Q6
+COLLECTOR: a5-collect-evidence.sh
+COLLECTOR_HOST: gateway
+CLIENT_ADDRESS_USED: 10.123.123.79
+COLLECTION_START_UTC: 2026-10-06T10:33:19Z
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: gateway
+ROLE: gateway
+LABEL: ruleset_dump
+COMMAND: doas -n nft list ruleset
+START_TIME_UTC: 2026-10-06T10:33:19Z
+OUTPUT:
+table ip nat {
+	chain postrouting {
+		type nat hook postrouting priority srcnat; policy accept;
+		oifname "eth0" masquerade
+	}
+}
+table inet filter {
+	chain input {
+		type filter hook input priority filter; policy drop;
+		ct state established,related accept
+		iifname "eth1" tcp dport 22 accept
+		iifname "lo" accept
+		iifname "eth2" udp dport 67 accept
+		iifname "eth2" meta l4proto icmp accept
+		iifname "eth2" tcp dport 22 accept
+	}
+
+	chain forward {
+		type filter hook forward priority filter; policy drop;
+		ct state established,related accept
+		iifname "eth2" oifname "eth0" meta l4proto icmp accept
+		iifname "eth2" oifname "eth0" tcp dport { 22, 53, 80, 443 } accept
+		iifname "eth2" oifname "eth0" udp dport 53 accept
+	}
+
+	chain output {
+		type filter hook output priority filter; policy accept;
+	}
+}
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-06T10:33:19Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: mgmt_ssh_to_gateway
+COMMAND: ncat --recv-only -w 5 -s 192.168.56.21 192.168.56.20 22
+START_TIME_UTC: 2026-10-06T10:35:23Z
+OUTPUT:
+SSH-2.0-OpenSSH_10.3
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-06T10:35:23Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: client_gateway_ssh
+COMMAND: ncat --recv-only -w 5 10.123.123.1 22
+START_TIME_UTC: 2026-10-06T10:37:24Z
+OUTPUT:
+SSH-2.0-OpenSSH_10.3
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-06T10:37:24Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: client_gateway_icmp
+COMMAND: ping -c 2 -W 2 10.123.123.1
+START_TIME_UTC: 2026-10-06T10:37:25Z
+OUTPUT:
+PING 10.123.123.1 (10.123.123.1) 56(84) bytes of data.
+64 bytes from 10.123.123.1: icmp_seq=1 ttl=64 time=0.141 ms
+64 bytes from 10.123.123.1: icmp_seq=2 ttl=64 time=0.745 ms
+
+--- 10.123.123.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1049ms
+rtt min/avg/max/mdev = 0.141/0.443/0.745/0.302 ms
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-06T10:37:25Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: client_internet_icmp
+COMMAND: ping -c 2 -W 2 8.8.8.8
+START_TIME_UTC: 2026-10-06T10:37:27Z
+OUTPUT:
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=62 time=71.9 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=62 time=606 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1000ms
+rtt min/avg/max/mdev = 71.939/339.067/606.196/267.128 ms
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-06T10:37:27Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: client_internet_ssh
+COMMAND: ncat --recv-only -w 5 8.8.8.8 22
+START_TIME_UTC: 2026-10-06T10:37:32Z
+OUTPUT:
+Ncat: TIMEOUT.
+EXIT_CODE: 1
+END_TIME_UTC: 2026-10-06T10:37:32Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: client_internet_http
+COMMAND: wget -T 5 -q -O /dev/null http://www.ru.is && echo HTTP_OK
+START_TIME_UTC: 2026-10-06T10:37:33Z
+OUTPUT:
+HTTP_OK
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-06T10:37:33Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: client_internet_https
+COMMAND: wget -T 5 -q -O /dev/null https://www.ru.is && echo HTTPS_OK
+START_TIME_UTC: 2026-10-06T10:37:34Z
+OUTPUT:
+HTTPS_OK
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-06T10:37:34Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: client_internet_dns
+COMMAND: nslookup google.com
+START_TIME_UTC: 2026-10-06T10:37:34Z
+OUTPUT:
+Server:		8.8.8.8
+Address:	8.8.8.8:53
+
+Name:	google.com
+Address: 142.251.14.113
+Name:	google.com
+Address: 142.251.14.100
+Name:	google.com
+Address: 142.251.14.139
+Name:	google.com
+Address: 142.251.14.101
+Name:	google.com
+Address: 142.251.14.138
+Name:	google.com
+Address: 142.251.14.102
+
+Non-authoritative answer:
+Name:	google.com
+Address: 2a00:1450:4001:c0f::8a
+Name:	google.com
+Address: 2a00:1450:4001:c0f::64
+Name:	google.com
+Address: 2a00:1450:4001:c0f::8b
+Name:	google.com
+Address: 2a00:1450:4001:c0f::71
+EXIT_CODE: 0
+END_TIME_UTC: 2026-10-06T10:37:34Z
+=== A5-EVIDENCE-END ===
+
+=== A5-EVIDENCE-BEGIN ===
+QUESTION: Q6
+HOST: client
+ROLE: client
+LABEL: client_blocked_port
+COMMAND: ncat --recv-only -w 5 10.123.123.1 5000
+START_TIME_UTC: 2026-10-06T10:37:40Z
+OUTPUT:
+Ncat: TIMEOUT.
+EXIT_CODE: 1
+END_TIME_UTC: 2026-10-06T10:37:40Z
+=== A5-EVIDENCE-END ===
+
+COLLECTION_END_UTC: 2026-10-06T10:37:40Z
