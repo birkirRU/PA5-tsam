@@ -1,19 +1,26 @@
-table ip nat { # handle 46
+table ip nat { # handle 52
 	chain postrouting { # handle 1
 		type nat hook postrouting priority 100; policy accept;
 		oifname "eth0" masquerade # handle 2
 	}
 }
-table inet filter { # handle 47
+table inet filter { # handle 53
 	chain input { # handle 1
 		type filter hook input priority 0; policy drop;
 		ct state 0x2,0x4 accept # handle 4
 		iifname "eth1" tcp dport 22 accept # handle 5
 		iifname "lo" accept # handle 6
+		iifname "eth2" udp dport 67 accept # handle 7
+		iifname "eth2" meta l4proto 1 accept # handle 8
+		iifname "eth2" tcp dport 22 accept # handle 9
 	}
 
 	chain forward { # handle 2
 		type filter hook forward priority 0; policy drop;
+		ct state 0x2,0x4 accept # handle 10
+		iifname "eth2" oifname "eth0" meta l4proto 1 accept # handle 11
+		iifname "eth2" oifname "eth0" tcp dport { 22, 53, 80, 443 } accept # handle 13
+		iifname "eth2" oifname "eth0" udp dport 53 accept # handle 14
 	}
 
 	chain output { # handle 3

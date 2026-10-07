@@ -30,53 +30,51 @@ Welcome to Alpine!
 
 ### Test: Return traffic for permitted connections
 
-* Command: `ping -c 2 8.8.8.8`, `nslookup google.com 8.8.8.8` and `wget -O /dev/null http://example.com` (on the gateway)
-* Expected result: All succeed. The gateway's outgoing traffic is allowed (output policy accept), and the replies are accepted by the input chain only because of the `ct state established,related` rule, since there is no other rule that allows incoming ICMP, DNS or TCP replies.
-* Observed result: [WRITE WHAT HAPPENED]
+* Command: `ping -c 2 8.8.8.8`, `nslookup google.com 8.8.8.8`
+* Expected result: All succeed. The gateway's outgoing traffic is allowed (output policy accept), and the replies are accepted by the input chain only because of the `ct state established,related` rule.
+* Observed result: As expected
 * Command output:
 
 ```text
-$ ping -c 2 8.8.8.8
-PING 8.8.8.8 (8.8.8.8): 56 data bytes
-64 bytes from 8.8.8.8: seq=0 ttl=255 time=...ms
-64 bytes from 8.8.8.8: seq=1 ttl=255 time=...ms
+tsam@gateway:~$ ping -c 2 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=64 time=78.1 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=64 time=67.6 ms
 
 --- 8.8.8.8 ping statistics ---
-2 packets transmitted, 2 packets received, 0% packet loss
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 67.580/72.825/78.070/5.245 ms
 
-$ nslookup google.com 8.8.8.8
-Server:		8.8.8.8
-Address:	8.8.8.8:53
+tsam@gateway:~$ nslookup google.com 8.8.8.8
+Server:         8.8.8.8
+Address:        8.8.8.8:53
 
 Non-authoritative answer:
-Name:	google.com
-Address: 142.250.x.x
-
-$ wget -O /dev/null http://example.com
-Connecting to example.com (...)
-...
-'/dev/null' saved
+Name:   google.com
+Address: 142.251.20.139
+Name:   google.com
+Address: 142.251.20.101
 ```
 
 
 ### Test: Blocked other traffic from client to Internet
 
-* Command: `ping -c 2 -W 2 8.8.8.8`, `nslookup google.com 8.8.8.8` and `wget -T 3 -O /dev/null http://8.8.8.8` (on the client)
-* Expected result: All fail or time out. The forward chain has policy drop and no rules allowing client traffic yet, so the packets are dropped silently (timeout, not "connection refused").
-* Observed result: [WRITE WHAT HAPPENED]
+* Command: `ping -c 2 -W 2 8.8.8.8`, `nslookup google.com 8.8.8.8` and `wget -T 3 http://8.8.8.8`.
+* Expected result: All fail or time out. The forward chain has policy drop and no rules allowing client traffic (other than external protocols later tested), so the packets are dropped silently (timeout, not "connection refused").
+* Observed result: As expected
 * Command output:
 
 ```text
-$ ping -c 2 -W 2 8.8.8.8
-PING 8.8.8.8 (8.8.8.8): 56 data bytes
+tsam@client:~$ ping -c 2 -W 2 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 
 --- 8.8.8.8 ping statistics ---
-2 packets transmitted, 0 packets received, 100% packet loss
+2 packets transmitted, 0 received, 100% packet loss, time 1043ms
 
-$ nslookup google.com 8.8.8.8
+tsam@client:~$ nslookup google.com 8.8.8.8
 ;; connection timed out; no servers could be reached
 
-$ wget -T 3 -O /dev/null http://8.8.8.8
+tsam@client:~$ wget -T 3 http://8.8.8.8
 Connecting to 8.8.8.8 (8.8.8.8:80)
 wget: download timed out
 ```
@@ -85,20 +83,20 @@ wget: download timed out
 
 ### Test: Blocked other traffic from client to gateway
 
-* Command: `ping -c 2 -W 2 10.123.123.1` and `ssh -o ConnectTimeout=3 tsam@10.123.123.1` (on the client)
-* Expected result: Both fail or time out. The input chain only accepts established/related traffic, loopback and SSH on eth1. Nothing is allowed on eth2 yet, so these packets are dropped.
-* Observed result: [WRITE WHAT HAPPENED]
+* Command: `ping -c 2 -W 2 10.123.123.1` and `ssh -o ConnectTimeout=3 tsam@10.123.123.1`
+* Expected result: Both fail or time out. The input chain only accepts established/related traffic, loopback and SSH on eth1. Nothing is allowed on eth2 yet , so these packets are dropped.
+* Observed result: As expected
 * Command output:
 
 ```text
-$ ping -c 2 -W 2 10.123.123.1
-PING 10.123.123.1 (10.123.123.1): 56 data bytes
+tsam@client:~$ ping -c 2 -W 2 10.123.123.1
+PING 10.123.123.1 (10.123.123.1) 56(84) bytes of data.
 
 --- 10.123.123.1 ping statistics ---
-2 packets transmitted, 0 packets received, 100% packet loss
+2 packets transmitted, 0 received, 100% packet loss, time 1033ms
 
-$ ssh -o ConnectTimeout=3 tsam@10.123.123.1
-ssh: connect to host 10.123.123.1 port 22: Connection timed out
+tsam@client:~$ ssh -o ConnectTimeout=3 tsam@10.123.123.1
+ssh: connect to host 10.123.123.1 port 22: Operation timed out
 ```
 
 
