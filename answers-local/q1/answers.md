@@ -127,8 +127,17 @@ tsam@client:~$ ip addr
 
 
 tsam@client:~$ ip route
-192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.21 
+192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.21 a
 
+tsam@client:~$ cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+iface lo inet6 loopback
+
+auto eth1
+iface eth1 inet static
+        address 192.168.56.21
+        netmask 255.255.255.0
 ```
 
 ## Question 1c - Why does ping and nslookup not work on the client?
