@@ -30,8 +30,8 @@ net.ipv4.ip_forward = 1
 ### Which command works as expected and which does not? Why?
 
 `ping` works as expected, but `nslookup` does not. 
-The reason why `nslookup` refused connection is because the client has no database server to ask for the IP of `google.com`. This can be clearly seen when looking into `/etc/resolv.conf` which should store DNS lookup servers; it is empty. Usually, a DHCP header stores the DNS server IP's inside `option` section, but since we manually setup the private IP of the client within LAN; no DNS IP is configured for our client.
-Basically, up until now, we have only configured the router (tsam@gateway) to forward packets coming from client to the internet. An IP is the bare minimum needed for the end server in order to send a packet, but `google.com` isn't an IP, and needs a lookup; but client cannot look up because it doesn't know the database server that knows the IP mapping.
+The reason why `nslookup` refused connection is because the client has no DNS server to ask for the IP of `google.com`. This can be clearly seen when looking into `/etc/resolv.conf` which should store DNS lookup servers; it is empty. Usually, a DHCP header stores the DNS server IP's inside `option` section, but since we manually setup the private IP of the client within LAN; no DNS IP is configured for our client.
+Basically, up until now, we have only configured the router (tsam@gateway) to forward packets coming from client to the internet. An IP is the bare minimum needed for the end server in order to send a packet, but `google.com` isn't an IP, and needs a lookup; but client cannot look up because it doesn't know the DNS that knows the IP mapping.
 ### Commands used
 
 #### Client

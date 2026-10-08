@@ -11,9 +11,9 @@ Link state is either up, down or unknown
 Interface | Link state | IP address/subnet | Static/dynamic |
 ----------|------------|-------------------|----------------|
 lo        | unknown    | 127.0.0.1/8       | static         |
-eth0      |up            |10.0.2.15/24      |   static  |
-eth1      |up            |192.168.56.20/24  |   static  |
-eth2      |down          |NOT SET          | NOT SET    |
+eth0      | up         | 10.0.2.15/24      | static.        |
+eth1      | up         | 192.168.56.20/24  | static         |
+eth2      | down       | NOT SET           | NOT SET        |
 
 Route to           | via             | Interface |
 -------------------|-----------------|-----------|
@@ -76,9 +76,9 @@ Link state is either up, down or unknown
 
 Interface | Link state | IP address/subnet | Static/dynamic |
 ----------|------------|-------------------|----------------|
-lo        | unknown        | 127.0.0.1/8       | static         |
-eth0      | down           | NOT SET           | NOT SET        |
-eth1      | up             | 192.168.56.21/24  | static         |
+lo        | unknown    | 127.0.0.1/8       | static         |
+eth0      | down       | NOT SET           | NOT SET        |
+eth1      | up         | 192.168.56.21/24  | static         |
 
 Route to           | via             | Interface |
 -------------------|-----------------|-----------|
