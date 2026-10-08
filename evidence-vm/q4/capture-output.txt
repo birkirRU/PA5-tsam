@@ -1,8 +1,0 @@
-Capturing on 'eth0' and 'eth2'
-    1 0.000000000    10.0.2.15 → 8.8.8.8      ICMP 98 Echo (ping) request  id=0x0f80, seq=1/256, ttl=63
-    2 -0.000046180 10.123.123.2 → 8.8.8.8      ICMP 98 Echo (ping) request  id=0x0f80, seq=1/256, ttl=64
-    3 0.180127824      8.8.8.8 → 10.0.2.15    ICMP 98 Echo (ping) reply    id=0x0f80, seq=1/256, ttl=63 (request in 1)
-    4 0.180162512      8.8.8.8 → 10.123.123.2 ICMP 98 Echo (ping) reply    id=0x0f80, seq=1/256, ttl=62 (request in 2)
-    5 5.102829534 PCSSystemtec_e4:47:dd → 52:54:00:12:35:00 ARP 42 Who has 10.0.2.2? Tell 10.0.2.15
-    6 5.103074419 52:54:00:12:35:00 → PCSSystemtec_e4:47:dd ARP 64 10.0.2.2 is at 52:54:00:12:35:00
-    7 160.525075747      fe80::2 → ff02::1      ICMPv6 134 Router Advertisement from 52:54:00:12:35:00
