@@ -127,7 +127,7 @@ tsam@client:~$ ip addr
 
 
 tsam@client:~$ ip route
-192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.21 a
+192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.21
 
 tsam@client:~$ cat /etc/network/interfaces
 auto lo
