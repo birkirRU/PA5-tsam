@@ -11,7 +11,7 @@ Link state is either up, down or unknown
 Interface | Link state | IP address/subnet | Static/dynamic |
 ----------|------------|-------------------|----------------|
 lo        | unknown    | 127.0.0.1/8       | static         |
-eth0      | up         | 10.0.2.15/24      | static.        |
+eth0      | up         | 10.0.2.15/24      | dynamic.        |
 eth1      | up         | 192.168.56.20/24  | static         |
 eth2      | down       | NOT SET           | NOT SET        |
 
@@ -64,6 +64,20 @@ default via 10.0.2.2 dev eth0 metric 202
 10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 
 192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.20 
 
+
+tsam@gateway:~$ cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+iface lo inet6 loopback
+
+auto eth0
+iface eth0 inet dhcp
+iface eth0 inet6 auto
+
+auto eth1
+iface eth1 inet static
+        address 192.168.56.20
+        netmask 255.255.255.0
 ```
 
 ## Question 1b: client interfaces
