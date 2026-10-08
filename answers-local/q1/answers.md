@@ -10,7 +10,7 @@ Link state is either up, down or unknown
 
 Interface | Link state | IP address/subnet | Static/dynamic |
 ----------|------------|-------------------|----------------|
-lo        | down (unknown?)  | 127.0.0.1/8  | static  |
+lo        | unknown    | 127.0.0.1/8       | static         |
 eth0      |up            |10.0.2.15/24      |   static  |
 eth1      |up            |192.168.56.20/24  |   static  |
 eth2      |down          |NOT SET          | NOT SET    |
@@ -64,8 +64,6 @@ default via 10.0.2.2 dev eth0 metric 202
 10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 
 192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.20 
 
-$ [WRITE COMMAND USED HERE]
-[WRITE COMPLETE COMMAND OUTPUT HERE]
 ```
 
 ## Question 1b: client interfaces
@@ -78,9 +76,9 @@ Link state is either up, down or unknown
 
 Interface | Link state | IP address/subnet | Static/dynamic |
 ----------|------------|-------------------|----------------|
-lo        | down (unknown) | 127.0.0.1/8       | static         |
+lo        | unknown        | 127.0.0.1/8       | static         |
 eth0      | down           | NOT SET           | NOT SET        |
-eth1      | up             | 192.168.56.21     | static         |
+eth1      | up             | 192.168.56.21/24  | static         |
 
 Route to           | via             | Interface |
 -------------------|-----------------|-----------|
@@ -117,15 +115,13 @@ tsam@client:~$ ip addr
 tsam@client:~$ ip route
 192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.21 
 
-$ [WRITE COMMAND USED HERE]
-[WRITE COMPLETE COMMAND OUTPUT HERE]
 ```
 
 ## Question 1c - Why does ping and nslookup not work on the client?
 
-The reason why the client cannot ping nor perform a network DNS lookups, is because it doesn't have a default gateway out to the internet, it is yet to be configured. This can be seen in the output of the `ip route` of `1b`, no "default" keyword is displayed in the first line of outpu. The default gateway IP is the router's IP within the LAN (which client is connected to). It forwards your request to the internet. 
+The reason why the client cannot ping nor perform network DNS lookups, is because it doesn't have a default gateway out to the internet, it is yet to be configured. This can be seen in the output of the `ip route` of `1b`, no "default" keyword is displayed in the first line of output. The default gateway IP is the router's IP within the LAN (which client is connected to). It forwards your request to the internet. 
 
-To the contrary, the gateway VM, has default gateway, hence allows routing 
+To the contrary, the gateway VM, has default gateway, hence allows routing.
 
 #### Client
 

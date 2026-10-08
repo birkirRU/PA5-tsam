@@ -22,7 +22,7 @@ net.ipv4.ip_forward = 1
 tsam@gateway:~$ sysctl net.ipv4.ip_forward
 net.ipv4.ip_forward = 1
 
-tsam@gateway:~$ sudo cat /etc/systctl.conf
+tsam@gateway:~$ sudo cat /etc/sysctl.conf
 net.ipv4.ip_forward = 1
 ```
 

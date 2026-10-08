@@ -200,7 +200,7 @@ saving to 'index.html'
 index.html           100% |************************************************************|   577  0:00:00 ETA
 'index.html' saved
 
-sam@client:~$ nslookup google.com
+tsam@client:~$ nslookup google.com
 Server:         8.8.8.8
 Address:        8.8.8.8:53
 
