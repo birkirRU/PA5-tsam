@@ -132,7 +132,7 @@ To the contrary, the gateway VM, has default gateway, hence allows routing
 ```client
 tsam@client:~$ ping 8.8.8.8
 ping: connect: Network unreachable
-tsam@client:~$ nslookup google.co
+tsam@client:~$ nslookup google.com
 nslookup: write to '127.0.0.1': Connection refused
 ;; connection timed out; no servers could be reached
 ```
